@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Log;
 class ReferralController extends Controller
 {
     public function __construct() {
-        $this->middleware('auth');
+        $this->middleware('executive');
     }
     /**
      * Display a listing of the resource.
@@ -182,8 +182,12 @@ class ReferralController extends Controller
                         $ctr++;
                     }
                     else {
+                        if (isset($data[1])) {
                         $failed[] = $data[1];
                         Log::critical("Failed - data c = " . count($data).  " field c = " . count($cols) . " => ".implode(',', $data));
+                        }else{
+                            Log::critical("Failed - data c = " . count($data).  " field c = " . count($cols) . " => ".implode(',', $data));
+                        }
                     }
                     // print_r($arr);
 
