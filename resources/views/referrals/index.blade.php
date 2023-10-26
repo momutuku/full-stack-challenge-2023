@@ -84,48 +84,76 @@
         </div>
     </div>
 
+    <!-- Comment Form Modal -->
+    <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="commentModalLabel">Add Comment for Referral <span
+                            id="referralReferenceNo"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="/referrals/comment">
+                        {{ csrf_field() }}
+                        <input type="hidden" id="reference_no" name="reference_no">
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-primary" value="Save">
+                        </div>
+                    </form>
+                </div>
 
-    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
-<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> --}}
+            </div>
+        </div>
+    </div>
+
 
     <script>
         var $j = jQuery.noConflict();
         $j(document).ready(function() {
-    // Create a filter dropdown for each table header
-    $j('#referrals thead tr th').each(function() {
-        var column = $j(this).index();
-        var select = $j('<select><option value="">All</option></select>')
-            .appendTo($j(this))
-            .on('change', function() {
-                var val = $j(this).val();
-                // console.log('Selected Value: ' + val);
+            
+            $j('#referrals thead tr th').each(function() {
+                var column = $j(this).index();
+                var select = $j('<select><option value="">All</option></select>')
+                    .appendTo($j(this))
+                    .on('change', function() {
+                        var val = $j(this).val();
+                        table.column(column).search(val).draw();
 
-                // // Filter the table
-                // var table = $j('#referrals').DataTable();
-                // table.column(column).search(val ? '^' + val + '$' : '', true, false).draw();
+                    });
 
-                // // Log filtered data
-                // var data = table.data();
-                // console.log('Filtered Data: ', data);
+                // Populate the filter dropdown with unique values
+                var uniqueValues = [];
+
+                // Populate the filter dropdown with unique values
+                $j('#referrals tbody tr td:nth-child(' + (column + 1) + ')').each(function() {
+                    var val = $j(this).text();
+                    if (uniqueValues.indexOf(val) === -1) {
+                        uniqueValues.push(val);
+                        select.append($j('<option></option>').attr('value', val).text(val));
+                    }
+                });
             });
 
-        // Populate the filter dropdown with unique values
-        var uniqueValues = [];
 
-// Populate the filter dropdown with unique values
-$j('#referrals tbody tr td:nth-child(' + (column + 1) + ')').each(function() {
-    var val = $j(this).text();
-    if (uniqueValues.indexOf(val) === -1) {
-        uniqueValues.push(val);
-        select.append($j('<option></option>').attr('value', val).text(val));
-    }
-});
-    });
+            var table = $j('#referrals').DataTable();
 
-    // Initialize DataTable
-    var table = $j('#referrals').DataTable();
-});
+            table.on('click', 'tbody tr', function() {
+                var data = table.row(this).data();
+                var reference_no = data[1];
 
+                $('#reference_no').val(reference_no);
+                $('#referralReferenceNo').text(reference_no);
+                $('#commentModal').modal('show');
+            });
+        });
     </script>
 @endsection
