@@ -26,7 +26,7 @@ class ReferralController extends Controller
         $country_filter = false;
         //
         if ($country == null) {
-            $referrals = Referral::paginate(15);
+            $referrals = Referral::paginate(20);
             $countries = Referral::getCountries();
         } elseif ($city == null) {
             $country_filter = true;
@@ -34,7 +34,6 @@ class ReferralController extends Controller
 
             $countries = array($country);
             $cities = Referral::getCities($country);
-            $encryptionKey = 'supersecure';
             $referral = new Referral();
            foreach ($cities as $key => $value) {
             $cities[$key] = $referral->decryptAttribute($value);
