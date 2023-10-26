@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Referral;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -151,6 +152,32 @@ class ReferralController extends Controller
         return view('referrals.upload');
     }
 
+    public function comment()
+    {
+        $referralId=1;
+        return view('referrals.comment', compact('referralId'));
+        
+    }
+    public function addcomment(Request $request)
+    {
+        
+
+        $this->validate(request(), [
+            'comment' => 'required',
+            'reference_no' => 'required',
+        ]);
+
+        $referral = new Referral();
+
+        Comment::create([
+            "comment" =>request("comment"),
+            "reference_no" =>$referral->encryptAttribute(request("reference_no")),
+        ]);
+    
+        return redirect('refrrals')->with('status', 'Comment added successfully');
+    
+    }
+
     public function processUpload(Request $request)
     {
         $cols = array(
@@ -185,10 +212,6 @@ class ReferralController extends Controller
 
                     if (count($cols) == count($data)) {
                         $arr = array_combine($cols, $data);
-                        // // Encrypt on Bulk upload
-                        // foreach ($arr as $key => $value) {
-                        //     $arr[$key] = Crypt::encrypt($value);
-                        // }
                         Referral::create($arr);
                         $ctr++;
                     } else {
