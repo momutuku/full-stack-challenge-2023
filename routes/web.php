@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
 	return view('default');
 });
@@ -18,7 +19,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 //Routes for Posts
 Route::get('posts', 'PostsController@index');
 Route::post('posts', 'PostsController@store');
@@ -30,7 +30,7 @@ Route::get('referrals/upload', 'ReferralController@upload');
 Route::post('referrals/upload', 'ReferralController@processUpload');
 Route::get('referrals/create', 'ReferralController@create')->name('add-referral');
 Route::get('referrals/{country?}/{city?}', 'ReferralController@index');
-Route::post('referrals', 'ReferralController@store');
+Route::post('referrals', 'ReferralController@store')->middleware('auth:web');
 
 //Logged in Users
 Route::get('my-posts', 'AuthorsController@posts')->name('my-posts');
@@ -38,3 +38,6 @@ Route::get('my-posts', 'AuthorsController@posts')->name('my-posts');
 //Routes for Authors
 Route::get('authors', 'AuthorsController@index');
 Route::get('authors/{author}', 'AuthorsController@show');
+
+// Routes ot see users
+Route::get('users', 'UsersController@index');

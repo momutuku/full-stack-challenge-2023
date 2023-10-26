@@ -21,8 +21,6 @@ class Admin
         if (Auth::user()->role == 'admin' ) {
             return $next($request);
            
-        }else {
-            return redirect('/home');
         }
 
        
