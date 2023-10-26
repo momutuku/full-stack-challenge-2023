@@ -111,10 +111,16 @@
             });
 
         // Populate the filter dropdown with unique values
-        $j('#referrals tbody tr td:nth-child(' + (column + 1) + ')').each(function() {
-            var val = $j(this).text();
-            select.append($j('<option></option>').attr('value', val).text(val));
-        });
+        var uniqueValues = [];
+
+// Populate the filter dropdown with unique values
+$j('#referrals tbody tr td:nth-child(' + (column + 1) + ')').each(function() {
+    var val = $j(this).text();
+    if (uniqueValues.indexOf(val) === -1) {
+        uniqueValues.push(val);
+        select.append($j('<option></option>').attr('value', val).text(val));
+    }
+});
     });
 
     // Initialize DataTable
