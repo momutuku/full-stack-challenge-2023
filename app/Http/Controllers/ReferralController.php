@@ -172,6 +172,7 @@ class ReferralController extends Controller
         Comment::create([
             "comment" =>request("comment"),
             "reference_no" =>$referral->encryptAttribute(request("reference_no")),
+            "user"=>request("user")
         ]);
     
         return redirect('referrals')->with('status', 'Comment added successfully');

@@ -8,7 +8,7 @@ use ESolution\DBEncryption\Traits\EncryptedAttribute;
 class Comment extends Model
 {
     protected $primaryKey = 'uri'; // Specify the primary key
-    protected $fillable = ['comment', 'reference_no']; // Specify the fillable fields
+    protected $fillable = ['comment', 'reference_no','user']; // Specify the fillable fields
 
     // public function referral()
     // {
