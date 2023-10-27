@@ -174,7 +174,7 @@ class ReferralController extends Controller
             "reference_no" =>$referral->encryptAttribute(request("reference_no")),
         ]);
     
-        return redirect('refrrals')->with('status', 'Comment added successfully');
+        return redirect('referrals')->with('status', 'Comment added successfully');
     
     }
 
