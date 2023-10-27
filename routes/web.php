@@ -42,3 +42,4 @@ Route::get('authors/{author}', 'AuthorsController@show');
 
 // Routes ot see users
 Route::get('users', 'UsersController@index');
+Route::post('users/update', 'UsersController@update');

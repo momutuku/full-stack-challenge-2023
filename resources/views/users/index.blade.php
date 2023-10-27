@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-
+    @can('edituser') 
     <!-- Comment Form Modal -->
     <div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
         aria-hidden="true">
@@ -94,6 +94,7 @@
             </div>
         </div>
     </div>
+    @endcan
     <script>
         var $j = jQuery.noConflict();
         $j(document).ready(function() {

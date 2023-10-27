@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -25,6 +26,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('bulk-upload', function ($user) {
+            return Auth::user()->role == "executive";
+        });
+        Gate::define('edituser',function ($user) {
+            return Auth::user()->role == "admin";
+        });
     }
 }

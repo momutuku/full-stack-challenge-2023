@@ -105,8 +105,10 @@
                             <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
                         </div>
                         <div class="modal-footer">
+                            @can('bulk-upload') 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-primary" value="Save">
+                            @endcan
                         </div>
                     </form>
                 </div>
