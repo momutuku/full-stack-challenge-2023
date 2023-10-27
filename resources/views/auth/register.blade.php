@@ -8,7 +8,7 @@
                 <div class="panel-heading">Register</div>
 
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
+                    <form class="form-horizontal" method="POST" action="/users/register">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -36,6 +36,19 @@
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-md-4 control-label">Role</label>
+
+                            <div class="col-md-6">
+                                <select name="role" id="roles" class="form-control" >
+                                    <option value="supervisor">Supervisor</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="executive">Executive</option>
+                                    
+                                </select>
                             </div>
                         </div>
 

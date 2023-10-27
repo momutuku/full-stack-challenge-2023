@@ -28,5 +28,26 @@ class UsersController extends Controller
         ]);
         return redirect('/users');
     }
+    public function delete(Request $request)
+    {
+        $users = User::all()->where('email', $request["email"])->first;
+        $users = $users->delete();
+        return redirect('/users');
+    }
+
+    protected function register(Request $data)
+    {
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role' => $data['role'],
+        ]);
+        $users = User::all();
+        return view('users.index', compact('users'));
+    }
+
+
+
 }
 

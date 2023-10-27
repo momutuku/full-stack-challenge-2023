@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', function () {
 	return view('default');
@@ -43,3 +43,5 @@ Route::get('authors/{author}', 'AuthorsController@show');
 // Routes ot see users
 Route::get('users', 'UsersController@index');
 Route::post('users/update', 'UsersController@update');
+Route::post('users/delete', 'UsersController@delete');
+Route::post('users/register', 'UsersController@register');
