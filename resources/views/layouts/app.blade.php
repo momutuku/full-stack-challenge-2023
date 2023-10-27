@@ -13,10 +13,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript"
+        src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 
 </head>
@@ -62,10 +63,13 @@
                                 </a>
 
                                 <ul class="dropdown-menu">
+
                                     <li>
-                                        <a href="{{ route('add-referral') }}">
-                                            Add Referral
-                                        </a>
+                                        @can('bulk-upload')
+                                            <a href="{{ route('add-referral') }}">
+                                                Add Referral
+                                            </a>
+                                        @endcan
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -99,8 +103,7 @@
                 }
                 var divider = window.location.href.substr(-1) == '/' ? '' : '/'
                 window.location.href = window.location.origin + window.location.pathname + divider +
-                country;
-                // console.log($("#country").val());
+                    country;
             });
         });
     </script>

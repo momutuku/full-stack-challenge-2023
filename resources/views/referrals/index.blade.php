@@ -8,7 +8,7 @@
                     <div class="panel-heading">
                         <h1>Referrals</h1>
                     </div>
-                    <div>@include('partials.filterReferrals') @include('partials.createReferralButton')</div>
+                    <div>@include('partials.filterReferrals') @can('bulk-upload') @include('partials.createReferralButton') @endcan</div>
                     <div class="panel-body">
 
                         @if (session('status'))
@@ -100,15 +100,16 @@
                     <form method="POST" action="/referrals/comment">
                         {{ csrf_field() }}
                         <input type="hidden" id="reference_no" name="reference_no">
+                        <input type="hidden" id="user" name="user" value="{{Auth::user()->email}}">
                         <div class="form-group">
                             <label for="comment">Comment:</label>
                             <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
                         </div>
                         <div class="modal-footer">
-                            @can('bulk-upload') 
+                            
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-primary" value="Save">
-                            @endcan
+                            
                         </div>
                     </form>
                 </div>
@@ -155,6 +156,7 @@
                 $('#reference_no').val(reference_no);
                 $('#referralReferenceNo').text(reference_no);
                 $('#commentModal').modal('show');
+                console.log(data[1]);
             });
         });
     </script>
