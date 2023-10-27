@@ -21,7 +21,10 @@ class Referral extends Model
     {
         return Referral::whereEncrypted("country", $country)->pluck('city')->unique();
     }
-
+    public function referral()
+    {
+        return $this->belongsTo(Comment::class, 'reference_no', 'reference_no');
+    }
     protected $encryptable = [
         'country',
         'reference_no',

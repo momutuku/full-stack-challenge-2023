@@ -20,12 +20,9 @@ class Executive
 
         if (!Auth::check()) {
             return redirect('/home');
-        }
-        if (Auth::user()->role == 'executive' ||Auth::user()->role == 'admin' ) {
+        }else {
             return $next($request);
            
-        }else {
-            return redirect('/home');
         }
     }
 }
