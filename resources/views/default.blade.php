@@ -85,8 +85,11 @@
                 <div class="links">
                     <a href="/referrals/">Search</a>
                     <!-- <a href="/referrals/create">Add New Referral</a> -->
+                    @can('bulk-upload')
                     <a href="/referrals/upload">Bulk Upload Referral</a>
+                    @endcan
                 </div>
+
             </div>
         </div>
     </body>
