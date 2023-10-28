@@ -39,9 +39,11 @@ class UsersController extends Controller
     public function ban(Request $request)
     {
         $users = User::all()->where('email', $request["email"])->first;
+        $status= ($users->role->active==1)?0:1;
         $users = $users->update([
-            "active" => $request["0"]
+            "active" => $status
         ]);
+        
         return redirect('/users');
     }
 

@@ -27,6 +27,7 @@
                                     <th>Name</th>
                                     <th>Email No</th>
                                     <th>Role</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,6 +36,7 @@
                                         <td>{{ $user->name }} </td>
                                         <td>{{ $user->email }} </td>
                                         <td>{{ $user->role }} </td>
+                                        <td id="status">{{ ($user->active==1) ? "Active" : "Blocked" }} </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -95,11 +97,19 @@
                             <input type="hidden" id="delemail" name="email">
                             <button type="submit" class="btn btn-danger" id="deleteButton">DELETE</button>
                         </form>
-                        <form method="POST" action="/users/ban">
+                        <form method="POST" action="/users/ban" id="banform">
+                           
                             {{ csrf_field() }}
-                            <input type="hidden" id="delemail" name="email">
+                            <input type="hidden" id="banemail" name="email">
                             <button type="submit" class="btn btn-danger" id="deleteButton">BAN</button>
                         </form>
+                        <form method="POST" action="/users/ban"id="unbanform" >
+                           
+                            {{ csrf_field() }}
+                            <input type="hidden" id="unbanemail" name="email">
+                            <button type="submit" class="btn btn-success" id="deleteButton">ACTIVATE</button>
+                        </form>
+                       
                     </div>
 
                 </div>
@@ -125,8 +135,16 @@
                 $('#uname').val(username);
                 $('#email').val(data[1]);
                 $('#delemail').val(data[1]);
+                $('#unbanemail').val(data[1]);
+                $('#banemail').val(data[1]);
                 $('#roles').val(data[2]);
-                console.log(data[1]);
+                if (data[3]=="Active") {
+                    $('#unbanform').hide();
+                    $('#banform').show();
+                } else {
+                    $('#banform').hide();
+                    $('#unbanform').show();
+                }
                 $('#commentModal').modal('show');
             });
         });
