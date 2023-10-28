@@ -8,7 +8,10 @@
                     <div class="panel-heading">
                         <h1>Referrals</h1>
                     </div>
-                    <div>@include('partials.filterReferrals') @can('bulk-upload') @include('partials.createReferralButton') @endcan</div>
+                    <div>@include('partials.filterReferrals') @can('bulk-upload')
+                            @include('partials.createReferralButton')
+                        @endcan
+                    </div>
                     <div class="panel-body">
 
                         @if (session('status'))
@@ -100,20 +103,40 @@
                     <form method="POST" action="/referrals/comment">
                         {{ csrf_field() }}
                         <input type="hidden" id="reference_no" name="reference_no">
-                        <input type="hidden" id="user" name="user" value="{{Auth::user()->email}}">
+                        <input type="hidden" id="user" name="user" value="{{ Auth::user()->email }}">
                         <div class="form-group">
                             <label for="comment">Comment:</label>
                             <textarea name="comment" id="comment" class="form-control" rows="4" required></textarea>
                         </div>
                         <div class="modal-footer">
-                            
+
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                             <input type="submit" class="btn btn-primary" value="Save">
-                            
+
                         </div>
                     </form>
                 </div>
 
+            </div>
+        </div>
+    </div>
+    <!-- Modal for displaying comments -->
+    <div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="commentsModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn btn-primary" id="addcomment" data-dismiss="modal">Add Comment</button>
+                    <br>
+                    <h5 class="modal-title" id="commentsModalLabel">Comments</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="commentsList">
+
+                </div>
             </div>
         </div>
     </div>
@@ -122,7 +145,7 @@
     <script>
         var $j = jQuery.noConflict();
         $j(document).ready(function() {
-            
+
             $j('#referrals thead tr th').each(function() {
                 var column = $j(this).index();
                 var select = $j('<select><option value="">All</option></select>')
@@ -133,10 +156,8 @@
 
                     });
 
-                // Populate the filter dropdown with unique values
                 var uniqueValues = [];
 
-                // Populate the filter dropdown with unique values
                 $j('#referrals tbody tr td:nth-child(' + (column + 1) + ')').each(function() {
                     var val = $j(this).text();
                     if (uniqueValues.indexOf(val) === -1) {
@@ -149,14 +170,42 @@
 
             var table = $j('#referrals').DataTable();
 
-            table.on('click', 'tbody tr', function() {
-                var data = table.row(this).data();
+             
+
+            $j('#addcomment').on('click', function() {
+
                 var reference_no = data[1];
 
                 $('#reference_no').val(reference_no);
                 $('#referralReferenceNo').text(reference_no);
                 $('#commentModal').modal('show');
-                console.log(data[1]);
+                console.log(data);
+            });
+
+            table.on('dblclick', 'tbody tr', function() {
+
+                data = table.row(this).data();
+            
+
+
+
+                var referenceNo = $(this).find('td:eq(1)')
+                    .text(); 
+
+                $.get('/comments/' + referenceNo, function(data) {
+
+                    $('#commentsList').empty();
+
+                    data.forEach(function(comment) {
+                        $('#commentsList').append('<p><strong>' + comment.user +
+                            '</strong> - ' + comment.comment + ' (' + comment
+                            .created_at +
+                            ')</p>');
+                    });
+
+                    $('#commentsModal').modal('show');
+                });
+
             });
         });
     </script>

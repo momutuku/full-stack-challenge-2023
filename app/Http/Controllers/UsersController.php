@@ -35,6 +35,16 @@ class UsersController extends Controller
         return redirect('/users');
     }
 
+    
+    public function ban(Request $request)
+    {
+        $users = User::all()->where('email', $request["email"])->first;
+        $users = $users->update([
+            "active" => $request["0"]
+        ]);
+        return redirect('/users');
+    }
+
     protected function register(Request $data)
     {
         User::create([

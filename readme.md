@@ -30,3 +30,17 @@ You will find the public key for cecile@womenfirstdigital.org here https://drive
 We need enable search / filters on all columns so that the executives are able to quickly search down the data.
 You need to alter the code to make the view referrals interface better ( Use your creativity )
 
+
+# Changes I made can
+Admin User
+username:moses@example.com
+password:moses@example.com
+
+The /register route is only available to the admin user
+I added a /users route that shows all the users info 
+To make changes to a user, click on the user to display a pop up
+
+Added filters to all the columns of the referrals table
+To view comments for a referral, double click on the referral
+To add a comment double click on the referall then click on the "Add Comment"
+Only an admin/supervisor can add referrals

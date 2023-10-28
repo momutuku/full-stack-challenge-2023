@@ -95,6 +95,11 @@
                             <input type="hidden" id="delemail" name="email">
                             <button type="submit" class="btn btn-danger" id="deleteButton">DELETE</button>
                         </form>
+                        <form method="POST" action="/users/ban">
+                            {{ csrf_field() }}
+                            <input type="hidden" id="delemail" name="email">
+                            <button type="submit" class="btn btn-danger" id="deleteButton">BAN</button>
+                        </form>
                     </div>
 
                 </div>

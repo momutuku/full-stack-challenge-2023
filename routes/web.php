@@ -43,5 +43,9 @@ Route::get('authors/{author}', 'AuthorsController@show');
 // Routes ot see users
 Route::get('users', 'UsersController@index');
 Route::post('users/update', 'UsersController@update');
+Route::post('users/ban', 'UsersController@ban');
 Route::post('users/delete', 'UsersController@delete');
 Route::post('users/register', 'UsersController@register');
+Route::get('comments/{reference_no}', 'ReferralController@getComments');
+
+
