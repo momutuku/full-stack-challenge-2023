@@ -27,7 +27,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('bulk-upload', function ($user) {
-            return Auth::user()->role == "executive";
+            return Auth::user()->role == "supervisor" ||Auth::user()->role =="admin";
         });
         Gate::define('edituser',function ($user) {
             return Auth::user()->role == "admin";

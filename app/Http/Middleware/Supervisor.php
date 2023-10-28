@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 
 class Supervisor
@@ -18,7 +19,7 @@ class Supervisor
         if (!Auth::check()) {
             return redirect('/home');
         }
-        if (Auth::user()->role == 'supervisor' ) {
+        if (Auth::user()->role == 'supervisor' || Auth::user()->role == 'admin') {
             return $next($request);
            
         }else {

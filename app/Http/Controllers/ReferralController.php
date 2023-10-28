@@ -11,7 +11,7 @@ class ReferralController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('executive');
+        $this->middleware('supervisor');
     }
     /**
      * Display a listing of the resource.
@@ -178,6 +178,14 @@ class ReferralController extends Controller
         return redirect('referrals')->with('status', 'Comment added successfully');
     
     }
+
+    public function getComments($reference_no)
+{
+    $referral = new Referral();
+    $reference_no=$referral->encryptAttribute($reference_no);
+    $comments = Comment::where("reference_no", $reference_no)->get();
+    return response()->json($comments);
+}
 
     public function processUpload(Request $request)
     {
